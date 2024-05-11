@@ -3,6 +3,7 @@ package com.cursoudemy.workshopmongo.config;
 import com.cursoudemy.workshopmongo.domain.Post;
 import com.cursoudemy.workshopmongo.domain.User;
 import com.cursoudemy.workshopmongo.dto.AuthorDTO;
+import com.cursoudemy.workshopmongo.dto.CommentDTO;
 import com.cursoudemy.workshopmongo.repository.PostRepository;
 import com.cursoudemy.workshopmongo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,14 @@ public class Instantiation implements CommandLineRunner {
 
         Post post1 = new Post(null, sdf.parse("21/03/2024"), "Indo viajar", "E levar meus cachorros junto.", new AuthorDTO(alex));
         Post post2 = new Post(null, sdf.parse("24/03/2024"), "Voltando da viagem", "Os cachorros aprontaram muito.", new AuthorDTO(alex));
-        
+
+        CommentDTO c1 = new CommentDTO("Espero que tenha se divertido!", sdf.parse("24/03/2024"), new AuthorDTO(maria));
+        CommentDTO c2 = new CommentDTO("Boa volta!", sdf.parse("24/03/2024"), new AuthorDTO(bob));
+        CommentDTO c3 = new CommentDTO("Boa viagem", sdf.parse("21/03/2024"), new AuthorDTO(maria));
+
+        post1.getComments().addAll(Arrays.asList(c3));
+        post2.getComments().addAll(Arrays.asList(c1, c2));
+
         postRepository.saveAll(Arrays.asList(post1, post2));
 
         alex.getPosts().addAll(Arrays.asList(post1, post2));
